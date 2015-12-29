@@ -9,3 +9,5 @@ apresentar graficamente uma lista com a relação desses arquivos, conforme a fi
 O  cliente  deve  ter  a  opção  de  copiar  qualquer  um  arquivo  da  lista consolidada, sem a necessidade de se informar em que servidor está. O envio de arquivos  também  deve  estar disponível,  sendo  seu  local  de  destino  calculado 
 aleatoriamente  pelo  sistema.  Todos  os  arquivos  deverão  ser  de  texto  simples,  ao estilo txt.
 (3,0 pontos) – 05/01/2016
+
+![alt tag](https://github.com/randler/Sistemas-Distribuidos-1/blob/master/imagens.jpeg)
