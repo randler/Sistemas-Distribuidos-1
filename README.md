@@ -11,3 +11,15 @@ aleatoriamente  pelo  sistema.  Todos  os  arquivos  deverão  ser  de  texto  s
 (3,0 pontos) – 05/01/2016
 
 ![alt tag](https://github.com/randler/Sistemas-Distribuidos-1/blob/master/imagens.jpeg)
+
+#II unidade
+
+* 2. Utilizando  JRMI, desenvolver  um  sistema que  permita  a resolução  de  expressões algébricas de forma distribuída. 
+Uma expressão algébrica sempre deve ter a forma: 
+** A op B, onde A é um dígito decimal
+** op uma operação algébrica (+, -, *, /) e 
+** B um dígito  decimal.  
+O sistema  deverá  solicitar  ao  usuário  uma  expressão  e fornecer o resultado,  calculando  de  forma  distribuída  
+cada  mini-termo.  Para  a  expressão fornecida, o sistema deverá no cliente calcular a prioridade de resolução e solicitar 
+aos objetos remotos a efetivação do cálculo. Deverão ser definidos quatro objetos remotos  (um para  cada  operação).
+A  replicação das  operações é  necessária  em cada objeto, sendo a escolha de  qual será executada em cada nó   de responsabilidade do cliente. (3,0 pontos) – 19/01/2016
