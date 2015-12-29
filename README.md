@@ -16,9 +16,11 @@ aleatoriamente  pelo  sistema.  Todos  os  arquivos  deverão  ser  de  texto  s
 
 * 2. Utilizando  JRMI, desenvolver  um  sistema que  permita  a resolução  de  expressões algébricas de forma distribuída. 
 Uma expressão algébrica sempre deve ter a forma: 
-** A op B, onde A é um dígito decimal
-** op uma operação algébrica (+, -, *, /) e 
-** B um dígito  decimal.  
+
+* A op B, onde A é um dígito decimal
+* op uma operação algébrica (+, -, *, /) e 
+* B um dígito  decimal.  
+
 O sistema  deverá  solicitar  ao  usuário  uma  expressão  e fornecer o resultado,  calculando  de  forma  distribuída  
 cada  mini-termo.  Para  a  expressão fornecida, o sistema deverá no cliente calcular a prioridade de resolução e solicitar 
 aos objetos remotos a efetivação do cálculo. Deverão ser definidos quatro objetos remotos  (um para  cada  operação).
