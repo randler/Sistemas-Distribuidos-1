@@ -9,12 +9,12 @@ package Jframes;
  *
  * @author randler
  */
-public class Cliente extends javax.swing.JFrame {
+public class Client extends javax.swing.JFrame {
 
     /**
-     * Creates new form Cliente
+     * Creates new form Client
      */
-    public Cliente() {
+    public Client() {
         initComponents();
     }
 
@@ -27,6 +27,7 @@ public class Cliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListArq = new javax.swing.JList();
@@ -34,9 +35,10 @@ public class Cliente extends javax.swing.JFrame {
         jLabelTotalArq = new javax.swing.JLabel();
         jButtonCopiar = new javax.swing.JButton();
         jButtonSair = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Gernciador de Arquivos Compartilhados");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -88,8 +90,6 @@ public class Cliente extends javax.swing.JFrame {
 
         jButtonSair.setText("Sair");
 
-        jLabel1.setText("Gernciador de Arquivos Compartilhados");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -122,7 +122,7 @@ public class Cliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCopiar)
                     .addComponent(jButtonSair))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -132,6 +132,9 @@ public class Cliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCopiarActionPerformed
 
+    /**
+     * @param args the command line arguments
+     */
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
