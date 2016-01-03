@@ -5,17 +5,42 @@
  */
 package Jframes;
 
+import JRMICliente.CopArqClient;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.ListModel;
+
 /**
  *
  * @author randler
  */
 public class Client extends javax.swing.JFrame {
 
+    CopArqClient cop = new CopArqClient();
+     HashMap<String, String> lista;
     /**
      * Creates new form Client
      */
     public Client() {
         initComponents();
+        
+        
+        this.lista = cop.runThreads();
+        DefaultListModel listModel = new DefaultListModel();
+        
+        Object[] list = lista.keySet().toArray();
+        
+        System.out.println(lista.values());
+        
+        for (int i = 0; i < list.length; i++) {
+            listModel.addElement(list[i]);
+        }       
+        
+        jListArq.setModel(listModel);
+        
     }
 
     /**
@@ -33,6 +58,7 @@ public class Client extends javax.swing.JFrame {
         jListArq = new javax.swing.JList();
         jLabel2 = new javax.swing.JLabel();
         jLabelTotalArq = new javax.swing.JLabel();
+        jButtonAdicionar = new javax.swing.JButton();
         jButtonCopiar = new javax.swing.JButton();
         jButtonSair = new javax.swing.JButton();
 
@@ -42,16 +68,19 @@ public class Client extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jListArq.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        jListArq.setToolTipText("");
         jScrollPane1.setViewportView(jListArq);
 
         jLabel2.setText("arquivos");
 
         jLabelTotalArq.setText(" - ");
+
+        jButtonAdicionar.setText("Adicionar");
+        jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAdicionarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -62,17 +91,22 @@ public class Client extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 330, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabelTotalArq)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)))
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonAdicionar)
+                        .addGap(0, 329, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(jButtonAdicionar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -81,7 +115,6 @@ public class Client extends javax.swing.JFrame {
         );
 
         jButtonCopiar.setText("Copiar");
-        jButtonCopiar.setEnabled(false);
         jButtonCopiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCopiarActionPerformed(evt);
@@ -89,6 +122,11 @@ public class Client extends javax.swing.JFrame {
         });
 
         jButtonSair.setText("Sair");
+        jButtonSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,8 +167,33 @@ public class Client extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCopiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCopiarActionPerformed
-        // TODO add your handling code here:
+
+        
+        if(jListArq.isSelectionEmpty()){
+            JOptionPane.showMessageDialog(this, "Selecione um arquivo primeiro!");
+        }else{
+            for (Entry<String,String> dado: lista.entrySet()) {
+                if(jListArq.getSelectedValue().equals(dado.getKey())){
+                    System.out.println(dado.getValue());
+                    cop.copiarArquivo(dado.getValue());
+                    
+                }
+                
+            }
+            
+        }
+        
+        
+        
     }//GEN-LAST:event_jButtonCopiarActionPerformed
+
+    private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAdicionarActionPerformed
+
+    private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButtonSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -138,6 +201,7 @@ public class Client extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAdicionar;
     private javax.swing.JButton jButtonCopiar;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JLabel jLabel1;

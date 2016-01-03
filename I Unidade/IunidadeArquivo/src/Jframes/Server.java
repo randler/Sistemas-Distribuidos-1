@@ -5,7 +5,7 @@
  */
 package Jframes;
 
-import JRMI.Servidor.CopArq;
+import JRMIServidor.CopArq;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;

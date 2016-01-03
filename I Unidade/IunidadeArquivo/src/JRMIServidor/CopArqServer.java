@@ -1,4 +1,4 @@
-package JRMI.Servidor;
+package JRMIServidor;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
