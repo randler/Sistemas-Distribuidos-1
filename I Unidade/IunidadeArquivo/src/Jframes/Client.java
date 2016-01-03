@@ -33,7 +33,7 @@ public class Client extends javax.swing.JFrame {
         
         Object[] list = lista.keySet().toArray();
         
-        System.out.println(lista.values());
+        System.out.println("Lista"+lista.values());
         
         for (int i = 0; i < list.length; i++) {
             listModel.addElement(list[i]);
@@ -172,10 +172,11 @@ public class Client extends javax.swing.JFrame {
         if(jListArq.isSelectionEmpty()){
             JOptionPane.showMessageDialog(this, "Selecione um arquivo primeiro!");
         }else{
+            if(!lista.isEmpty())
             for (Entry<String,String> dado: lista.entrySet()) {
                 if(jListArq.getSelectedValue().equals(dado.getKey())){
                     System.out.println(dado.getValue());
-                    cop.copiarArquivo(dado.getValue());
+                    cop.copiarArquivo(dado.getKey(), dado.getValue());
                     
                 }
                 

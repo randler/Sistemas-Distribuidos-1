@@ -12,14 +12,17 @@ public class CopArqClient {
     private File[] files1;
     private File[] files2;
     private File[] files3;
+    private String host1 = "//localhost/Copiar";
+    private String host2 = "//localhost/Copiar";
+    private String host3 = "//localhost/Copiar";
     private HashMap<String, String> listas = new HashMap<String, String>();
      
     
     public HashMap<String, String> runThreads() {
         try {
-            final ICopArq maq1 = (ICopArq) Naming.lookup("//localhost/Copiar");
-            final ICopArq maq2 = (ICopArq) Naming.lookup("//localhost/Copiar");
-            final ICopArq maq3 = (ICopArq) Naming.lookup("//localhost/Copiar");
+            final ICopArq maq1 = (ICopArq) Naming.lookup(host1);
+            final ICopArq maq2 = (ICopArq) Naming.lookup(host2);
+            final ICopArq maq3 = (ICopArq) Naming.lookup(host3);
              
             
             Thread t1, t2, t3;
@@ -63,7 +66,7 @@ public class CopArqClient {
             while ((t1.getState() != State.TERMINATED) || (t2.getState() != State.TERMINATED) || (t3.getState() != State.TERMINATED)) {
             }
    
-            listas = maq1.listaNomes(files1, files2, files3);            
+            listas = maq1.listaNomes(files1, files2, files3,host1,host2,host3);            
             
 
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
@@ -72,15 +75,15 @@ public class CopArqClient {
         }
         return listas;        
     }
-    public void copiarArquivo(final String caminho){
+    public void copiarArquivo(final String arquivo, final String host){
         try {
-            final ICopArq maq4 = (ICopArq) Naming.lookup("//localhost/Copiar");
+            final ICopArq maq4 = (ICopArq) Naming.lookup(host);
             Thread t4;
             t4 = new Thread() {
                 @Override
                 public void run() {
                     try {
-                       maq4.copArquivo(caminho);
+                       maq4.copArquivo(arquivo);
                     } catch (RemoteException ex) {
                         Logger.getLogger(CopArqClient.class.getName()).log(Level.SEVERE, null, ex);
                     }

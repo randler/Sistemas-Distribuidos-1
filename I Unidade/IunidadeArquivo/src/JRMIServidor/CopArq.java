@@ -1,25 +1,28 @@
 package JRMIServidor;
-import java.awt.List;
 import java.io.File;
 import java.io.FileFilter;
+import java.net.MalformedURLException;
 import java.rmi.*;
 import java.rmi.server.*;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CopArq extends UnicastRemoteObject implements ICopArq
 {
-        private HashMap<String, String> lista = new HashMap<String, String>();
+        private final HashMap<String, String> lista = new HashMap<>();
     public CopArq() throws RemoteException{}
 
     @Override
     public File[] lerArquivo() throws RemoteException {
         
-        FileFilter filter = new FileFilter() {
+        FileFilter filter;
+            filter = new FileFilter() {
+                @Override
                 public boolean accept(File file) {
                     return file.getName().endsWith(".txt");
                 }
-        };        
+            };        
         
         File dir = new File("src/files");
         File[] files = dir.listFiles(filter);
@@ -38,17 +41,18 @@ public class CopArq extends UnicastRemoteObject implements ICopArq
     }
 
     @Override
-    public HashMap<String, String> listaNomes(File[] f1, File[] f2, File[] f3) throws RemoteException {
+    public HashMap<String, String> listaNomes(File[] f1, File[] f2, File[] f3, String host1, String host2, String host3) throws RemoteException {
         
-        for (int i = 0; i < f1.length; i++) {
-            lista.put(f1[i].getName(), f1[i].getAbsoluteFile().toURI().toString());
-        }
-        for (int i = 0; i < f2.length; i++) {
-            lista.put(f2[i].getName(), f2[i].getAbsoluteFile().toURI().toString());
-        }
-        for (int i = 0; i < f3.length; i++) {
-            lista.put(f3[i].getName(), f3[i].getAbsoluteFile().toURI().toString());
-        }        
+        
+            for (File f11 : f1) {
+                lista.put(f11.getName(), host1);
+            }
+            for (File f21 : f2) {
+                lista.put(f21.getName(), host2);
+            }
+            for (File f31 : f3) {
+                lista.put(f31.getName(), host3);
+            }        
         return lista;
         
     }
