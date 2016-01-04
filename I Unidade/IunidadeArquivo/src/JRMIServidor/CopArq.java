@@ -1,12 +1,13 @@
 package JRMIServidor;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
-import java.net.MalformedURLException;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.rmi.*;
 import java.rmi.server.*;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CopArq extends UnicastRemoteObject implements ICopArq
 {
@@ -36,8 +37,32 @@ public class CopArq extends UnicastRemoteObject implements ICopArq
     }
 
     @Override
-    public void copArquivo(String caminho) throws RemoteException {
-        System.out.println("Copiar arquivo: "+caminho);
+    public String copArquivo(String caminho) throws RemoteException {
+        String linha="",texto="";
+        try
+		{
+			BufferedReader in = new BufferedReader(new FileReader("src/files/"+caminho));
+			try
+			{				
+				while(linha!=null)
+				{
+					linha = in.readLine();
+					if(linha!=null)
+						texto=texto+"\n"+linha;
+				}
+				in.close();
+			}
+			catch( IOException e )
+			{
+				System.err.println(e);
+				System.exit(1);
+			}
+		}
+		catch(FileNotFoundException e)
+		{
+			texto = "Arquivo não encontrado";
+		}
+        return texto;
     }
 
     @Override
