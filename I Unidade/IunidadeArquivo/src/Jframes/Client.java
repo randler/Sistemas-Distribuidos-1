@@ -7,11 +7,12 @@ package Jframes;
 
 import JRMICliente.CopArqClient;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -27,6 +28,7 @@ public class Client extends javax.swing.JFrame {
     public Client() {
         initComponents();
         
+        this.setLocation(500, 200);
         
         this.lista = cop.runThreads();
         DefaultListModel listModel = new DefaultListModel();
@@ -38,8 +40,9 @@ public class Client extends javax.swing.JFrame {
         }       
         
         jListArq.setModel(listModel);
-        
+        this.jLabelTotalArq.setText(String.valueOf(list.length));
     }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,6 +60,7 @@ public class Client extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabelTotalArq = new javax.swing.JLabel();
         jButtonAdicionar = new javax.swing.JButton();
+        jLabelupArq = new javax.swing.JLabel();
         jButtonCopiar = new javax.swing.JButton();
         jButtonSair = new javax.swing.JButton();
 
@@ -87,7 +91,7 @@ public class Client extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabelTotalArq)
@@ -95,14 +99,17 @@ public class Client extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButtonAdicionar)
-                        .addGap(0, 329, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelupArq, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(jButtonAdicionar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonAdicionar)
+                    .addComponent(jLabelupArq, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
@@ -188,7 +195,21 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCopiarActionPerformed
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
-        // TODO add your handling code here:
+                
+        JFileChooser jfc = new JFileChooser();
+        
+        jfc.setFileFilter(new FileNameExtensionFilter("texto", "txt"));
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+       int resultado = jfc.showOpenDialog(this);  
+  
+        if ( resultado == JFileChooser.CANCEL_OPTION )  
+            JOptionPane.showMessageDialog(this,"Nenhuma texto foi selecionado!");
+        else{
+        String url=String.valueOf(jfc.getSelectedFile().toURI());
+        jLabelupArq.setText(jfc.getSelectedFile().getName());
+        Icon i=jfc.getIcon(jfc.getSelectedFile());
+        jLabelupArq.setIcon(i);  
+       } 
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
@@ -207,6 +228,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelTotalArq;
+    private javax.swing.JLabel jLabelupArq;
     private javax.swing.JList jListArq;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
