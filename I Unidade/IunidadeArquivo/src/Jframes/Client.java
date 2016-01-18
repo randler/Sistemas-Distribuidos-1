@@ -6,12 +6,19 @@
 package Jframes;
 
 import JRMICliente.CopArqClient;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -20,14 +27,22 @@ import javax.swing.ListModel;
 public class Client extends javax.swing.JFrame {
 
     CopArqClient cop = new CopArqClient();
-     HashMap<String, String> lista;
+    HashMap<String, String> lista;
+    JFileChooser jfc = new JFileChooser();
+     
     /**
      * Creates new form Client
      */
     public Client() {
         initComponents();
         
+        this.setLocation(500, 200);
+        iniciarOutorComponentes();
         
+        
+    }
+    
+    public void iniciarOutorComponentes(){
         this.lista = cop.runThreads();
         DefaultListModel listModel = new DefaultListModel();
         
@@ -38,8 +53,9 @@ public class Client extends javax.swing.JFrame {
         }       
         
         jListArq.setModel(listModel);
-        
+        this.jLabelTotalArq.setText(String.valueOf(list.length));
     }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,6 +73,8 @@ public class Client extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabelTotalArq = new javax.swing.JLabel();
         jButtonAdicionar = new javax.swing.JButton();
+        jLabelupArq = new javax.swing.JLabel();
+        jButtonUpload = new javax.swing.JButton();
         jButtonCopiar = new javax.swing.JButton();
         jButtonSair = new javax.swing.JButton();
 
@@ -80,6 +98,14 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        jButtonUpload.setText("Upload");
+        jButtonUpload.setEnabled(false);
+        jButtonUpload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUploadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -87,7 +113,7 @@ public class Client extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabelTotalArq)
@@ -95,14 +121,20 @@ public class Client extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButtonAdicionar)
-                        .addGap(0, 329, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelupArq, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(jButtonAdicionar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonAdicionar)
+                    .addComponent(jLabelupArq, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonUpload))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
@@ -112,7 +144,7 @@ public class Client extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButtonCopiar.setText("Copiar");
+        jButtonCopiar.setText("Baixar");
         jButtonCopiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCopiarActionPerformed(evt);
@@ -188,12 +220,47 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCopiarActionPerformed
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
-        // TODO add your handling code here:
+                
+        
+        
+        jfc.setFileFilter(new FileNameExtensionFilter("texto", "txt"));
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+       int resultado = jfc.showOpenDialog(this);  
+  
+        if ( resultado == JFileChooser.CANCEL_OPTION )  
+            JOptionPane.showMessageDialog(this,"Nenhuma texto foi selecionado!");
+        else{
+        String url=String.valueOf(jfc.getSelectedFile().toURI());
+        jLabelupArq.setText(jfc.getSelectedFile().getName());
+        Icon i=jfc.getIcon(jfc.getSelectedFile());
+        jLabelupArq.setIcon(i);
+        this.jButtonUpload.setEnabled(true);
+       } 
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jButtonUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUploadActionPerformed
+        File file =jfc.getSelectedFile();
+        
+        if(cop.adicionarArquivos(file)){
+            JOptionPane.showMessageDialog(this, "Upload completo");
+            this.lista.clear();
+            iniciarOutorComponentes();
+            this.jfc.cancelSelection();
+            this.jLabelupArq.setIcon(null);
+            this.jLabelupArq.setText("");
+            this.jButtonUpload.setEnabled(false);
+            
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "Erro ao fazer Upload");
+        }
+       
+        
+    }//GEN-LAST:event_jButtonUploadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -204,9 +271,11 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAdicionar;
     private javax.swing.JButton jButtonCopiar;
     private javax.swing.JButton jButtonSair;
+    private javax.swing.JButton jButtonUpload;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelTotalArq;
+    private javax.swing.JLabel jLabelupArq;
     private javax.swing.JList jListArq;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

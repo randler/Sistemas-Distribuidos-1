@@ -7,12 +7,8 @@ package Jframes;
 
 import JRMIServidor.CopArq;
 import java.rmi.Naming;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -25,6 +21,7 @@ public class Server extends javax.swing.JFrame {
      */
     public Server() {
         initComponents();
+        this.setLocation(500, 200);
     }
 
     /**
@@ -108,17 +105,7 @@ public class Server extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonIniciarServerActionPerformed
 
     private void jButtonPararServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPararServerActionPerformed
-           
-        try {
-            registry.unbind(null);
-        } catch (RemoteException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NotBoundException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        this.jButtonPararServer.setEnabled(false);
-            this.jButtonIniciarServer.setEnabled(true);
+       System.exit(0);
     }//GEN-LAST:event_jButtonPararServerActionPerformed
 
     /**

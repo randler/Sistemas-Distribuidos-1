@@ -32,8 +32,32 @@ public class CopArq extends UnicastRemoteObject implements ICopArq
     }
 
     @Override
-    public void addArquivo() throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String addArquivo(String caminho) throws RemoteException {
+   String linha="",texto="";
+        try
+		{
+			BufferedReader in = new BufferedReader(new FileReader(caminho));
+			try
+			{				
+				while(linha!=null)
+				{
+					linha = in.readLine();
+					if(linha!=null)
+						texto=texto+linha;
+				}
+				in.close();
+			}
+			catch( IOException e )
+			{
+				System.err.println(e);
+				System.exit(1);
+			}
+		}
+		catch(FileNotFoundException e)
+		{
+			texto = "Arquivo não encontrado";
+		}
+        return texto;
     }
 
     @Override
@@ -48,7 +72,7 @@ public class CopArq extends UnicastRemoteObject implements ICopArq
 				{
 					linha = in.readLine();
 					if(linha!=null)
-						texto=texto+"\n"+linha;
+						texto=texto+linha;
 				}
 				in.close();
 			}

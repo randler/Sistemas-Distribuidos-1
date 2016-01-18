@@ -10,9 +10,9 @@ import java.lang.Thread.State;
 import java.net.MalformedURLException;
 import java.rmi.*;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 public class CopArqClient {
 
@@ -23,7 +23,7 @@ public class CopArqClient {
     private String host1 = "//localhost/Copiar";
     private String host2 = "//localhost/Copiar";
     private String host3 = "//localhost/Copiar";
-    
+
     private String saida = "";
     private boolean flag = false;
 
@@ -84,26 +84,83 @@ public class CopArqClient {
         return listas;
     }
 
+    public boolean adicionarArquivos(final File caminho) {
+        flag = false;
+        String host = null;
+        Random random = new Random();
+        int sorte = random.nextInt(3);
+        
+        if(sorte == 0){
+            host = host1;
+        }else if(sorte == 1){
+            host = host2;
+        }else if(sorte == 2){
+            host = host3;
+        }
+
+        try {
+            final ICopArq maq5 = (ICopArq) Naming.lookup(host);
+            Thread t5;
+            t5 = new Thread() {
+
+                @Override
+                public void run() {
+                    try {
+                        saida = maq5.addArquivo(caminho.toString());
+
+                        try {
+
+                            BufferedWriter out = new BufferedWriter(new FileWriter("src/files/" + caminho.getName()));
+                            try {
+                                
+                                out.write(saida);
+
+                                out.close();
+                                flag = true;
+                            } catch (FileNotFoundException e) {
+                                System.err.println(e);
+                            }
+                        } catch (IOException e) {
+                            System.err.println(e);
+                            System.exit(1);
+                        }
+
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(CopArqClient.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            };
+            t5.start();
+            while ((t5.getState() != State.TERMINATED)) {
+            }
+
+        } catch (NotBoundException | MalformedURLException | RemoteException ex) {
+            Logger.getLogger(CopArqClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return flag;
+    }
+
     public boolean copiarArquivo(final String arquivo, final String host) {
         flag = false;
         try {
             final ICopArq maq4 = (ICopArq) Naming.lookup(host);
             Thread t4;
             t4 = new Thread() {
-                
+
                 @Override
                 public void run() {
                     try {
                         saida = maq4.copArquivo(arquivo);
 
                         try {
-                            
-                            BufferedWriter out = new BufferedWriter(new FileWriter("src/copiados/"+arquivo));
+
+                            BufferedWriter out = new BufferedWriter(new FileWriter("src/copiados/" + arquivo));
                             try {
                                 out.write(saida + "\n");
 
                                 out.close();
-                                flag=true;
+                                flag = true;
                             } catch (FileNotFoundException e) {
                                 System.err.println(e);
                             }

@@ -6,7 +6,7 @@ import java.util.HashMap;
 public interface ICopArq extends Remote
 {
 	public File[] lerArquivo() throws RemoteException;
-	public void addArquivo() throws RemoteException;
+	public String addArquivo(String caminho) throws RemoteException;
         public String copArquivo(String caminho) throws RemoteException;
         public HashMap<String, String> listaNomes(File[] f1, File[] f2, File[] f3, String host1, String host2, String host3) throws RemoteException;
         
