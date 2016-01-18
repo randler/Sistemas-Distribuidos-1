@@ -96,8 +96,11 @@
                           <Component id="jButtonAdicionar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabelupArq" max="32767" attributes="0"/>
+<<<<<<< HEAD
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButtonUpload" min="-2" pref="133" max="-2" attributes="0"/>
+=======
+>>>>>>> 7d72f566ef47158668119dfeb94a3c671b5c8370
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -111,7 +114,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jButtonAdicionar" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelupArq" min="-2" pref="21" max="-2" attributes="0"/>
+<<<<<<< HEAD
                       <Component id="jButtonUpload" min="-2" max="-2" attributes="0"/>
+=======
+>>>>>>> 7d72f566ef47158668119dfeb94a3c671b5c8370
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="185" max="-2" attributes="0"/>
@@ -163,6 +169,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelupArq">
         </Component>
+<<<<<<< HEAD
         <Component class="javax.swing.JButton" name="jButtonUpload">
           <Properties>
             <Property name="text" type="java.lang.String" value="Upload"/>
@@ -172,6 +179,8 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonUploadActionPerformed"/>
           </Events>
         </Component>
+=======
+>>>>>>> 7d72f566ef47158668119dfeb94a3c671b5c8370
       </SubComponents>
     </Container>
     <Component class="javax.swing.JButton" name="jButtonCopiar">

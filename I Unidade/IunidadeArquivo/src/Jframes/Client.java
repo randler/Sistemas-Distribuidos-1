@@ -37,7 +37,10 @@ public class Client extends javax.swing.JFrame {
         initComponents();
         
         this.setLocation(500, 200);
+<<<<<<< HEAD
         iniciarOutorComponentes();
+=======
+>>>>>>> 7d72f566ef47158668119dfeb94a3c671b5c8370
         
         
     }
@@ -74,7 +77,10 @@ public class Client extends javax.swing.JFrame {
         jLabelTotalArq = new javax.swing.JLabel();
         jButtonAdicionar = new javax.swing.JButton();
         jLabelupArq = new javax.swing.JLabel();
+<<<<<<< HEAD
         jButtonUpload = new javax.swing.JButton();
+=======
+>>>>>>> 7d72f566ef47158668119dfeb94a3c671b5c8370
         jButtonCopiar = new javax.swing.JButton();
         jButtonSair = new javax.swing.JButton();
 
@@ -122,9 +128,13 @@ public class Client extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButtonAdicionar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+<<<<<<< HEAD
                         .addComponent(jLabelupArq, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+=======
+                        .addComponent(jLabelupArq, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+>>>>>>> 7d72f566ef47158668119dfeb94a3c671b5c8370
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -133,8 +143,12 @@ public class Client extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonAdicionar)
+<<<<<<< HEAD
                     .addComponent(jLabelupArq, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonUpload))
+=======
+                    .addComponent(jLabelupArq, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+>>>>>>> 7d72f566ef47158668119dfeb94a3c671b5c8370
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
@@ -221,7 +235,11 @@ public class Client extends javax.swing.JFrame {
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
                 
+<<<<<<< HEAD
         
+=======
+        JFileChooser jfc = new JFileChooser();
+>>>>>>> 7d72f566ef47158668119dfeb94a3c671b5c8370
         
         jfc.setFileFilter(new FileNameExtensionFilter("texto", "txt"));
         jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -233,8 +251,12 @@ public class Client extends javax.swing.JFrame {
         String url=String.valueOf(jfc.getSelectedFile().toURI());
         jLabelupArq.setText(jfc.getSelectedFile().getName());
         Icon i=jfc.getIcon(jfc.getSelectedFile());
+<<<<<<< HEAD
         jLabelupArq.setIcon(i);
         this.jButtonUpload.setEnabled(true);
+=======
+        jLabelupArq.setIcon(i);  
+>>>>>>> 7d72f566ef47158668119dfeb94a3c671b5c8370
        } 
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
