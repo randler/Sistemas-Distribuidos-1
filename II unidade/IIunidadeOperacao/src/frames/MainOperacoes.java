@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Frames;
+package frames;
 
 import javax.swing.JOptionPane;
+import pos.Pos;
 
 /**
  *
@@ -13,6 +14,18 @@ import javax.swing.JOptionPane;
  */
 public class MainOperacoes extends javax.swing.JFrame {
 
+    
+    private int cont = 0;
+
+    public int getCont() {
+        return cont;
+    }
+
+    public void setCont(int cont) {
+        this.cont = cont;
+    }
+    
+    
     /**
      * Creates new form MainOperacoes
      */
@@ -97,39 +110,68 @@ public class MainOperacoes extends javax.swing.JFrame {
 
     private void jButtonResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResultadoActionPerformed
         
+        Pos pos = new Pos();
+        
         double num1, num2, res = 0;
-        String operação, jtext;
+        String operação, jtext, op1 = "";
         
         jtext = jTextField1.getText();
-        System.out.println(jtext);
-        if(jtext.length() > 3){
-            JOptionPane.showMessageDialog(this,"Insira apenas numeros com um digito \n e os simbolos das operações (+,-,/,*)\nEx: 4+5");
-            
-        }else{            
-                num1 = Double.parseDouble(jtext.substring(0, 1));
-                operação = jtext.substring(1, 2);
-                num2 = Double.parseDouble(jtext.substring(2, 3));
+        
+        jtext = pos.posFixa(jtext);
+        
+        for (int i = 0; i < jtext.length(); i++) {
+            if(isNumber(jtext.charAt(i))){
+                op1+=jtext.charAt(i);
+            }else{
+                op1+=jtext.charAt(i);
+                setCont(cont++);
+                enviar(op1);
                 
-                if (operação.equals("+")) {
-                    res = num1 + num2;
-                }else if(operação.equals("-")){
-                    res = num1 - num2;
-                }else if(operação.equals("/")){
-                    res = num1 / num2;
-                }else if(operação.equals("*")){
-                    res = num1 * num2;
-                }else{
-                    JOptionPane.showMessageDialog(null,"Insira uma operação valida!");
-                }
+            }
+            
+        }
+          
                 
                 jLabelSaidaResultado.setText(""+res);
             
-        }
+        
         
         
     }//GEN-LAST:event_jButtonResultadoActionPerformed
 
-
+private void enviar(String op1){
+    
+    switch(getCont()){
+        case 1:
+            
+            break;
+        case 2:
+            
+            break;
+        case 3:
+            
+            break;
+        case 4:
+            
+            setCont(0);
+            break;
+            
+    }
+    
+}    
+    
+private boolean isNumber(char var){
+    boolean saida= false;
+    try{
+        String temp = String.valueOf(var);
+        Integer.parseInt(temp);
+        saida = true;
+    }catch(NumberFormatException e){
+        saida = false;
+    }
+    return saida;
+    
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonResultado;
