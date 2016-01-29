@@ -5,7 +5,11 @@
  */
 package frames;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.MulticastSocket;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -20,13 +24,13 @@ import server.OperacoesRemote;
  */
 public class MainOperacoes extends javax.swing.JFrame {
 
-    
     private int cont = 0;
     private double chegada;
     OperacoesRemote operacaoM1;
     OperacoesRemote operacaoM2;
     OperacoesRemote operacaoM3;
     OperacoesRemote operacaoM4;
+    MulticastSocket clientSocket;
 
     public double getChegada() {
         return chegada;
@@ -34,8 +38,8 @@ public class MainOperacoes extends javax.swing.JFrame {
 
     public void setChegada(double chegada) {
         this.chegada = chegada;
-    }    
-    
+    }
+
     public int getCont() {
         return cont;
     }
@@ -43,8 +47,31 @@ public class MainOperacoes extends javax.swing.JFrame {
     public void setCont(int cont) {
         this.cont = cont;
     }
-    
-    
+
+    public void iniciarMulticastCliente() {
+        try {
+            byte[] sendData = new byte[1024];
+            byte ttl = (byte) 1;
+            int porta = 5555;
+            clientSocket = new MulticastSocket();
+            InetAddress endereco = InetAddress.getByName("227.0.0.1");
+            clientSocket.joinGroup(endereco);
+
+            String sentence = "cliente";
+            sendData = sentence.getBytes();
+            DatagramPacket sendPacket;
+            sendPacket = new DatagramPacket(sendData,
+                    sendData.length, endereco, porta);
+            clientSocket.setTimeToLive(ttl);
+            clientSocket.send(sendPacket);
+            sentence = null;
+            sendPacket = null;
+
+        } catch (IOException ex) {
+            Logger.getLogger(MainOperacoes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     /**
      * Creates new form MainOperacoes
      */
@@ -54,8 +81,9 @@ public class MainOperacoes extends javax.swing.JFrame {
             this.operacaoM3 = (OperacoesRemote) Naming.lookup("//localhost/Operacoes");
             this.operacaoM2 = (OperacoesRemote) Naming.lookup("//localhost/Operacoes");
             this.operacaoM1 = (OperacoesRemote) Naming.lookup("//localhost/Operacoes");
+            iniciarMulticastCliente();
             initComponents();
-            
+
             this.setLocation(500, 400);
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(MainOperacoes.class.getName()).log(Level.SEVERE, null, ex);
@@ -138,54 +166,50 @@ public class MainOperacoes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResultadoActionPerformed
-        
+
         Pos pos = new Pos();
-        
         double res = 0;
         String jtext, op1 = "";
-        
+
         jtext = jTextField1.getText();
-        
+
         jtext = pos.posFixa(jtext);
-                // 538*+5+95*-    
+
         for (int i = 0; i < jtext.length(); i++) {
-            if(isNumber(jtext.charAt(i))){
-                op1+=jtext.charAt(i);
-            }else{
-                if(op1.length() == 2){
-                    op1+=jtext.charAt(i);
+            if (isNumber(jtext.charAt(i))) {
+                op1 += jtext.charAt(i);
+            } else {
+                if (op1.length() == 2) {
+                    op1 += jtext.charAt(i);
                     cont++;
                     String resultado = enviar(op1);
                     op1 = resultado;
-                }else if (op1.length() == 3){
+                } else if (op1.length() == 3) {
                     String sobra = op1.substring(0, 1);
                     op1 = op1.substring(1);
-                    op1+=jtext.charAt(i);
+                    op1 += jtext.charAt(i);
                     cont++;
                     String resultado = enviar(op1);
-                    op1 = sobra+""+resultado;
+                    op1 = sobra + "" + resultado;
                 }
-                
+
             }
-            
-            
+
         }
         res = Integer.parseInt(op1);
-                      
-                jLabelSaidaResultado.setText(""+res);
-            
-        
-        
-        
+
+        jLabelSaidaResultado.setText("" + res);
+
+
     }//GEN-LAST:event_jButtonResultadoActionPerformed
 
-private String enviar(String op1){
+    private String enviar(String op1) {
         int chega = 0;
         String saida = "";
-    
+
         try {
-            
-            switch(getCont()){
+
+            switch (getCont()) {
                 case 1:
                     chega = operacaoM1.verificaOperacao(op1);
                     break;
@@ -199,50 +223,50 @@ private String enviar(String op1){
                     chega = operacaoM4.verificaOperacao(op1);
                     setCont(0);
                     break;
-                    
+
             }
-            
+
         } catch (RemoteException ex) {
             Logger.getLogger(MainOperacoes.class.getName()).log(Level.SEVERE, null, ex);
         }
         String temp = String.valueOf(chega);
         
-        
-        if(temp.length()>1){
-            saida = temp.substring(1,2);
-            if(!isNumber(saida))
-               saida = temp.substring(2,3); 
-        }else
-            saida = temp;
-        
-        return saida;
-    
-}    
-private boolean isNumber(String var){
-    boolean saida= false;
-    try{
-        String temp = String.valueOf(var);
-        Integer.parseInt(temp);
-        saida = true;
-    }catch(NumberFormatException e){
-        saida = false;
-    }
-    return saida;
-    
-}
 
-private boolean isNumber(char var){
-    boolean saida= false;
-    try{
-        String temp = String.valueOf(var);
-        Integer.parseInt(temp);
-        saida = true;
-    }catch(NumberFormatException e){
-        saida = false;
+        if (temp.length() > 1) {
+            saida = "" + 0;
+        } else {
+            saida = temp;
+        }
+
+        return saida;
+
     }
-    return saida;
-    
-}
+
+    private boolean isNumber(String var) {
+        boolean saida = false;
+        try {
+            String temp = String.valueOf(var);
+            Integer.parseInt(temp);
+            saida = true;
+        } catch (NumberFormatException e) {
+            saida = false;
+        }
+        return saida;
+
+    }
+
+    private boolean isNumber(char var) {
+        boolean saida = false;
+        try {
+            String temp = String.valueOf(var);
+            Integer.parseInt(temp);
+            saida = true;
+        } catch (NumberFormatException e) {
+            saida = false;
+        }
+        return saida;
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonResultado;
